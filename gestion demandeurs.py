@@ -5,13 +5,22 @@ Created on Tue Apr 28 14:20:59 2020
 @author: pierr
 """
 import csv
-#methode serialiser,deserialiser
-def writecsv(fichier):
+import panda
     
     
-def readcsv(fichier):
-    
+def inscription(fichier):
+    idCook="00"+str(compteur)
+    nom=input("Saisissez votre nom")
+    mail=input("Saisissez votre adresse mail")
+    password=input("Veuillez créer un mot de passe")
+    adresse=input("Saisissez votre adresse")
+    ville=input("Saisissez le nom de votre ville")
+    return Compte(idCook,nom,mail,password,adresse,ville)
+
+        
 class Compte:
+    compteur=0
+    compteur+=1
     def __init__(self,idCompte,nom,mail,password,telephone,adresse,ville):
         self.idCompte=idCompte
         self.nom=nom
