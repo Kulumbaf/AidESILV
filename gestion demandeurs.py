@@ -24,29 +24,30 @@ def inscription():
 def creationframe():
     serialisable = inscription()
     data = [[serialisable[i] for i in range(8)]]
-    reponse =input("tapez oui si vous souhaitez ajouter un compte")
-    while reponse == "oui":
-        donnee = inscription()
-        ligne = [donnee[i] for i in range(8)]
-        data.append(ligne)
-        reponse = input("tapez oui pour ajouter un autre compte")
-    return data
-
-def serialisation():
     colonne = ["idCompte","nom","mail","password","telephone","adresse","ville","numSS"]
     data = creationframe()
     dataFrame = pandas.DataFrame(data,columns = colonne)
-    print(dataFrame)
+    return dataFrame
+
+def serialisation(dataFrame,colonne):
+    dataFrame = addCompteFrame(dataFrame,colonne)
     with open("demandeurs.dat",'wb') as f:
         pickle.dump(dataFrame,f)
-    
-    
-    
-    
 
+def addCompteFrame(dataFrame,colonne):
+    reponse =input("tapez oui si vous souhaitez ajouter un compte")
+    while reponse == "oui":
+        donnee = creationframe()
+        df2=pandas.DataFrame(donnee,columns = colonne)
+        dataFrame = dataFrame.append(df2)
+        reponse = input("tapez oui pour ajouter un autre compte")
+    return dataFrame
+    
+    
+   
 def deserialisation():
     with open("demandeurs.dat",'rb') as f:
-        print(pickle.load(f))
+        pickle.load(f)
         
 class Compte:    
     compteur=0
