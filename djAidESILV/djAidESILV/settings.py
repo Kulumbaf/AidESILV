@@ -110,6 +110,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT = 'home' #à changer afin de rediriger vers la page de commande
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     '/var/www/static',
