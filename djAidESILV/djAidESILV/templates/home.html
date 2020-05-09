@@ -31,13 +31,21 @@
         <div class="intro-text left-0 text-center bg-faded p-5 rounded">
           <h2 class="section-heading mb-4">
             <span class="section-heading-upper">Se ravitailler efficacement</span>
-            <span class="section-heading-lower">{{ count }} inscriptions.</span>
+            <span class="section-heading-lower">{% if user.is_authenticated %} Bienvenu {{user.username}} !{% else %}{{ count }} inscriptions.{% endif %}</span>
           </h2>
-          <p class="mb-3">Connectez-vous au compte de votre foyer pour effectuer une commande. Un suivi complet est effectué par votre commune. Retrouvez aussi les dernières actualités ainsi qu'une carte interactive afin de connaitre la situation de vote département.
-          </p>
-          <div class="intro-button mx-auto">
-            <a class="btn btn-primary btn-xl" href="{% url 'signup' %}">Inscription</a>
-          </div>
+          {% if user.is_authenticated %}
+            <p class="mb-3">Ravitaillez vous et consultez les dernières actualités depuis votre portail.
+            </p>
+          {% else %}
+            <p class="mb-3">Connectez-vous au compte de votre foyer pour effectuer une commande. Un suivi complet est effectué par votre commune. Retrouvez aussi les dernières actualités ainsi qu'une carte interactive afin de connaitre la situation de vote département.
+            </p>
+          {% endif %}
+
+          {% if not user.is_authenticated %}
+            <div class="intro-button mx-auto">
+              <a class="btn btn-primary btn-xl" href="{% url 'signup' %}">Inscription</a>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
