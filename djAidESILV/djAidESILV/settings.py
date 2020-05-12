@@ -25,8 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djAidESILV.core',
+    'core',
     'crispy_forms',
+    'account'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -60,6 +61,9 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'account.UserProfile'
+ACCOUNT_SIGNUP_FORM_CLASS = 'account.forms.RegistrationForm'
 
 WSGI_APPLICATION = 'djAidESILV.wsgi.application'
 

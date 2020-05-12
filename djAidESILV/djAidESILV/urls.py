@@ -1,12 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-
-from djAidESILV.core import views
+from account.views import modify_profile
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('signup/', views.signup, name='signup'),
+    path('', include('core.urls')),
+    path('signup/', include('account.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('secret/', views.secret_page, name='secret'),
+    path('modify_profile/', modify_profile, name="modify_profile"),
     path('admin/', admin.site.urls),
 ]
