@@ -31,10 +31,10 @@
         <div class="intro-text left-0 text-center bg-faded p-5 rounded">
           <h2 class="section-heading mb-4">
             <span class="section-heading-upper">Bienvenue sur votre esapce</span>
-            <span class="section-heading-lower">{% if user.is_authenticated %} {{user.prenom}} !{% else %}{{ count }} inscriptions.{% endif %}</span>
+            <span class="section-heading-lower">{% if user.is_authenticated %} {{user.prenom}} {{ user.nom }} !{% else %}{{ count }} inscriptions.{% endif %}</span>
           </h2>
           {% if user.is_authenticated %}
-            <p class="mb-3">M/Mme {{ user.nom }}, domicilé(e) au {{ user.num_rue }} {{ user.nom_rue }} à {{ user.ville }}. {{ user.foyer }} personne(s) dans le foyer dont {{ user.bebes }} enfant(s) de bas âge à charge.
+            <p class="mb-3">Domicilé(e) au {{ user.num_rue }} {{ user.nom_rue }} à {{ user.ville }}. {{ user.foyer }} personne(s) dans le foyer dont {{ user.bebes }} enfant(s) de bas âge à charge.
             </p>
           {% else %}
             <p class="mb-3">Connectez-vous au compte de votre foyer pour effectuer une commande. Un suivi complet est effectué par votre commune. Retrouvez aussi les dernières actualités ainsi qu'une carte interactive afin de connaitre la situation de vote département.
