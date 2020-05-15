@@ -46,16 +46,13 @@
               <a class="nav-link" href="https://www.interieur.gouv.fr/Actualites/L-actu-du-Ministere">Actualités</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'products:product-list' %}">Se ravitailler</a>
+              <a class="nav-link" href="{% url 'products:alimentation' %}">Alimentation</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Alimentation</a>
+              <a class="nav-link" href="{% url 'products:pharmacie' %}">Pharmacie</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Pharmacie</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Quotidien</a>
+              <a class="nav-link" href="{% url 'products:quotidien' %}">Quotidien</a>
             {% if not user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'login' %}">Connexion</a>

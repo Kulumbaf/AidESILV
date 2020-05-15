@@ -2,6 +2,28 @@
 {% load staticfiles %}
 
 {% block content %}
+{% if messages %}
+
+    <style type="text/css">
+        div.messages{
+            background-color: #ff6b6b;
+            color: #f7fff7;
+        }
+        ul.messages{
+            list-style-type: none;
+        }
+    </style>
+
+    <div class='messages'>
+
+    <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}</li>
+    {% endfor %}
+    </ul>
+
+    </div>
+    {% endif %}
 <style>
     table.borderless td,table.borderless th{
        border: none !important;
@@ -10,55 +32,29 @@
 
  <section>
     <div class="row" id="tablerow">
-    <div class="col-md-4 col-xs-12">
-      <div class="panel panel-primary">
-        
-        <div class="panel-body">
-          <h5>Enter Voucher Code Below<br><small>If multiple, separate each with comma</small></h5>
-
-          <div>
-            <form action="." method="post">
-              {% csrf_token %}
-              <input type="text"  name="voucher_codes" class="form-control" id="voucher_code" required>
-              <input type="hidden"  name="order_id" value="{{ order.id }}">
-              <br>
-              <span>
-                <input type="submit" class="btn btn-warning pull-right" value="Apply Voucher"> 
-              </span>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="col-md-8 col-xs-12">
       <table class="table">
         <tr>
-          <td><h4>Order Summary</h4></td>
+          <td><h4>Résumé de la commande</h4></td>
         </tr>
         <tr>
           <td>
             {% for item in order.get_cart_items %}
               <tr>
                 <td>{{ item }}</td>
-                <td>R {{ item.product.price }}</td>
+                <td>{{ item.product.price }} €</td>
               </tr>
             {% endfor %}
           </td>
         </tr>
         <tr>
-          <td><strong>Order Total</strong> </td>
-          <td> <strong>R {{ order.get_cart_total }}</strong></td>
+          <td><strong>Total</strong> </td>
+          <td> <strong>{{ order.get_cart_total }} €</strong></td>
         </tr>
       </table>
         <form method="POST" action="{% url 'shopping_cart:process_payment' order.id %}">
           {% csrf_token %}
-          <button style="width: 50%; float: left;" class="btn btn-warning">Pay with card</button>
-          
-        </form>
-        <!-- for another day -->
-        <form method="POST" action="{% url 'shopping_cart:process_payment' order.id %}">
-          {% csrf_token %}
-          <button style="width: 50%; float: right;" class="btn btn-primary">Pay with Paypal</button>
+          <button style="width: 50%; float: left;" class="btn btn-warning">Payement par carte</button>
         </form>
     </div>
    </div>

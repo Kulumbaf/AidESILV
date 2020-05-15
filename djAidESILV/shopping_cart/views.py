@@ -11,6 +11,8 @@ from products.models import Product
 from shopping_cart.extras import generate_order_id
 from shopping_cart.models import OrderItem, Order
 
+from django.contrib import messages
+
 
 def get_user_pending_order(request):
     # get order for the correct user
@@ -28,10 +30,6 @@ def add_to_cart(request, **kwargs):
     user_profile = get_object_or_404(UserProfile, email=request.user.email)
     # filter products by id
     product = Product.objects.filter(id=kwargs.get('item_id', "")).first()
-    # check if the user already owns this product
-    if product in request.user.ebooks.all():
-        messages.info(request, 'You already own this ebook')
-        return redirect(reverse('products:product-list')) 
     # create orderItem of the selected product
     order_item, status = OrderItem.objects.get_or_create(product=product)
     # create order associated with the user
@@ -43,15 +41,20 @@ def add_to_cart(request, **kwargs):
         user_order.save()
 
     # show confirmation message and redirect back to the same page
-    messages.info(request, "item added to cart")
-    return redirect(reverse('products:product-list'))
+    messages.info(request, "Le produit a été ajouté à votre panier")
+    if product.category == 'A':
+        return redirect(reverse('products:alimentation'))
+    if product.category == 'P':
+        return redirect(reverse('products:pharmacie'))
+    if product.category == 'Q':
+        return redirect(reverse('products:quotidien'))
 
 @login_required()
 def delete_from_cart(request, item_id):
     item_to_delete = OrderItem.objects.filter(pk=item_id)
     if item_to_delete.exists():
         item_to_delete[0].delete()
-        messages.info(request, "Item has been deleted")
+        messages.info(request, "Le produit a été supprimé de votre panier")
     return redirect(reverse('shopping_cart:order_summary'))
 
 
@@ -109,7 +112,7 @@ def update_transaction_records(request, order_id):
     #====== TODO: Update Payment records ========
 
     # send an email to the customer
-    messages.info(request, "Thank you! Your items have been added to your profile")
+    messages.info(request, "Merci ! Le produit a été rajouté à votre profile")
     return redirect(reverse('account:my_profile'))
 
 

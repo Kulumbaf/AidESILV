@@ -79,7 +79,7 @@ class UserProfile(AbstractBaseUser):
     nom_rue = models.CharField(max_length=100, default='')
     tel = models.CharField(verbose_name="numéro de téléphone", max_length=10, default='')
     foyer = models.IntegerField(verbose_name="nombre de personne dans le foyer", default=0)
-    bebes = models.IntegerField(verbose_name="nombre d'enfants de moin de 4 ans", default=0)
+    bebes = models.IntegerField(verbose_name="nombre d'enfants de moins de 4 ans", default=0)
     ebooks = models.ManyToManyField(Product, blank=True)
 
     USERNAME_FIELD = 'email'

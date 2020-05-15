@@ -4,9 +4,12 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', include('core.urls')),
-    url(r'^account/', include('account.urls', namespace='account')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    url(r'^compte/', include('account.urls', namespace='account')),
+    path('comptes/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
-    url(r'^products/', include('products.urls', namespace='products')),
-    url(r'^cart/', include('shopping_cart.urls', namespace='shopping_cart'))
+    url(r'^ravitaillement/', include('products.urls', namespace='products')),
+    url(r'^panier/', include('shopping_cart.urls', namespace='shopping_cart')),
+    url(r'^alimentation/', include('products.urls', namespace='alimentation')),
+    url(r'^pharmacie/', include('products.urls', namespace='pharmacie')),
+    url(r'^quotidien/', include('products.urls', namespace='quotidien')),
 ]

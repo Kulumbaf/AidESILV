@@ -4,6 +4,6 @@ from .views import my_profile, signup
 app_name = 'account'
 
 urlpatterns = [
-    url(r'^signup/$', signup, name='signup'),
-    url(r'^me/$', my_profile, name='my_profile')
+    url(r'^inscription/$', signup, name='signup'),
+    url(r'^moi/$', my_profile, name='my_profile')
 ]

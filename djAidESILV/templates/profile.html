@@ -4,10 +4,10 @@
 
 <table class="table table-hover table-bordered text-center">
       <tr class="text-center">
-        <th>Date Ordered</th>
-        <th>Reference Code</th>
-        <th>Items</th>
-        <th>Price</th>
+        <th>Date de commande</th>
+        <th>Reference</th>
+        <th>Produit</th>
+        <th>Prix</th>
       </tr>
       {% for order in my_orders %}
         <tr>
@@ -18,19 +18,19 @@
         		{{ item.product.name }}
       		{% endfor %}
       	  </td>
-          <td>R{{ order.get_cart_total }}</td>
+          <td>{{ order.get_cart_total }} €</td>
 
         </tr>
       {% empty %}
         <tr>
-          <td colspan= 4> You have no orders.</td>
+          <td colspan= 4>Vous n'avez passé aucun commande.</td>
         </tr>
       {% endfor %}
 
       <tr>
         <td colspan=4>
           <a href="{% url 'products:product-list' %}" class="btn btn-warning pull-left">
-            {% if not order %}Continue Shopping{% else %}Add Items to Cart {% endif %}
+            {% if not order %}Continuer vers le ravitaillement{% else %}Ajouter des produits au panier {% endif %}
           </a> 
         </td>
       </tr>

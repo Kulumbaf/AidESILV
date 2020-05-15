@@ -1,14 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% if messages %}
+
+    <style type="text/css">
+        div.messages{
+            background-color: #ff6b6b;
+            color: #f7fff7;
+        }
+        ul.messages{
+            list-style-type: none;
+        }
+    </style>
+
+    <div class='messages'>
+
+    <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}</li>
+    {% endfor %}
+    </ul>
+
+    </div>
+    {% endif %}
 
  <section>
    <div class="row">
     <table class="table table-hover table-bordered text-center">
       <tr class="text-center">
         <th>no.</th>
-        <th>Item</th>
-        <th>Price</th>
+        <th>Produit</th>
+        <th>Prix</th>
       </tr>
       {% for item in order.get_cart_items %}
         <tr>
@@ -25,29 +47,29 @@
         </tr>
       {% empty %}
         <tr>
-          <td colspan= 3> You have not added any items yet.</td>
+          <td colspan= 3>Vous n'avez pas encore rajouté de produit.</td>
         </tr>
       {% endfor %}
       <tr>
         {% if order.get_cart_total != None %}
         <td colspan=2>
-          <strong class="pull-right">Order Total:</strong>
+          <strong class="pull-right">Total:</strong>
         </td>
         
         <td colspan= 1>
-          R<strong>{{ order.get_cart_total }}</strong>
+          <strong>{{ order.get_cart_total }}</strong> €
         </td>
         {% endif %}
       </tr>
       <tr>
         <td colspan=1 >
           <a href="{% url 'products:product-list' %}" class="btn btn-warning pull-left">
-            {% if order %}Continue Shopping{% else %}Add Items to Cart {% endif %}
+            {% if order %}Continuer vers le ravitaillement{% else %}Ajouter des produits au panier {% endif %}
           </a> 
         </td>
         <td colspan=2>
           {% if order.get_cart_items %}
-            <a href="{% url 'shopping_cart:checkout' %}" class="pull-right btn btn-primary">Proceed To Checkout</a>
+            <a href="{% url 'shopping_cart:checkout' %}" class="pull-right btn btn-primary">Procéder au règlement</a>
           {% endif %}
         </td>
       </tr>
