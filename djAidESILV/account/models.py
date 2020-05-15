@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import User
+from products.models import Product
+
+from django.conf import settings
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, prenom, nom, code_postal, ville, nom_rue, foyer, bebes, password):
@@ -77,6 +80,7 @@ class UserProfile(AbstractBaseUser):
     tel = models.CharField(verbose_name="numéro de téléphone", max_length=10, default='')
     foyer = models.IntegerField(verbose_name="nombre de personne dans le foyer", default=0)
     bebes = models.IntegerField(verbose_name="nombre d'enfants de moin de 4 ans", default=0)
+    ebooks = models.ManyToManyField(Product, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('username', 'prenom', 'nom', 'code_postal', 'ville', 'nom_rue', 'foyer', 'bebes',)

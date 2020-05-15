@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
-from account.views import modify_profile
+from django.conf.urls import url
 
 urlpatterns = [
     path('', include('core.urls')),
-    path('signup/', include('account.urls')),
+    url(r'^account/', include('account.urls', namespace='account')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('modify_profile/', modify_profile, name="modify_profile"),
     path('admin/', admin.site.urls),
+    url(r'^products/', include('products.urls', namespace='products')),
+    url(r'^cart/', include('shopping_cart.urls', namespace='shopping_cart'))
 ]
