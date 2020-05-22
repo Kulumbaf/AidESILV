@@ -70,6 +70,9 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'account:my_profile' %}">Mes commandes</a>
                 <a class="dropdown-item" href="{% url 'password_change' %}">Modifier le mot de passe</a>
+                {% if user.is_staff %}
+                <a class="dropdown-item" href="{% url 'products:piechart' %}">Diagramme des commandes</a>
+                {% endif %}
                 <a class="dropdown-item" href="{% url 'logout' %}">Déconnexion</a>
               </div>
             </li>

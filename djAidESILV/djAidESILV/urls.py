@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^alimentation/', include('products.urls', namespace='alimentation')),
     url(r'^pharmacie/', include('products.urls', namespace='pharmacie')),
     url(r'^quotidien/', include('products.urls', namespace='quotidien')),
+    url(r'^piechart/', include('products.urls', namespace="piechart")),
 ]
