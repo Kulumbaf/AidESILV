@@ -15,32 +15,24 @@ from django.contrib import messages
 
 
 def get_user_pending_order(request):
-    # get order for the correct user
     user_profile = get_object_or_404(UserProfile, email=request.user.email)
     order = Order.objects.filter(owner=user_profile, is_ordered=False)
     if order.exists():
-        # get the only order in the list of filtered orders
         return order[0]
     return 0
 
 
 @login_required()
 def add_to_cart(request, **kwargs):
-    # get the user profile
     user_profile = get_object_or_404(UserProfile, email=request.user.email)
-    # filter products by id
     product = Product.objects.filter(id=kwargs.get('item_id', "")).first()
-    # create orderItem of the selected product
     order_item, status = OrderItem.objects.get_or_create(product=product)
-    # create order associated with the user
     user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
     user_order.items.add(order_item)
     if status:
-        # generate a reference code
         user_order.ref_code = generate_order_id()
         user_order.save()
 
-    # show confirmation message and redirect back to the same page
     messages.info(request, "Le produit a été ajouté à votre panier")
     if product.category == 'A':
         return redirect(reverse('products:alimentation'))
@@ -78,7 +70,6 @@ def checkout(request):
 
 @login_required()
 def process_payment(request, order_id):
-    # process the payment
     return redirect(reverse('shopping_cart:update_records',
                     kwargs={
                         'order_id': order_id,
@@ -88,34 +79,24 @@ def process_payment(request, order_id):
 
 @login_required()
 def update_transaction_records(request, order_id):
-    # get the order being processed
     order_to_purchase = Order.objects.filter(pk=order_id).first()
 
-    # update placed order
     order_to_purchase.is_ordered=True
     order_to_purchase.date_ordered=datetime.datetime.now()
     order_to_purchase.save()
-    
-    # get all items in the order - generates a queryset
+
     order_items = order_to_purchase.items.all()
 
-    # update order items
     order_items.update(is_ordered=True, date_ordered=datetime.datetime.now())
 
-    # Add products to user profile
     user_profile = get_object_or_404(UserProfile, email=request.user.email)
-    # get the products from the items
     order_products = [item.product for item in order_items]
     user_profile.ebooks.add(*order_products)
     user_profile.save()
 
-    #====== TODO: Update Payment records ========
-
-    # send an email to the customer
     messages.info(request, "Merci ! Le produit a été rajouté à votre profile")
     return redirect(reverse('account:my_profile'))
 
 
 def success(request, **kwargs):
-    # a view signifying the transcation was successful
     return render(request, 'shopping_cart/purchase_success.html', {})

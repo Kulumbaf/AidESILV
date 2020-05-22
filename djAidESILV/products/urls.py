@@ -5,7 +5,8 @@ from .views import (
     alimentation,
     pharmacie,
     quotidien,
-    piechart
+    piechart,
+    carte
     )
 
 app_name = 'products'
