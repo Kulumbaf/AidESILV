@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^pharmacie$', pharmacie, name="pharmacie"),
     url(r'^quotidien$', quotidien, name="quotidien"),
     url(r'^piechart$', piechart, name="piechart"),
+    url(r'^carte$', carte, name="carte"),
 ]
